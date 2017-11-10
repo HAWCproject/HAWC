@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HAWCS-Dashboard</title>
+    <link href="resources/libraries/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type = "text/css" href="resources/stylesheets/dashboard.css" />
+    <link rel="stylesheet" type = "text/css" href="resources/stylesheets/navBar.css" />
+    <link rel="stylesheet" type = "text/css" href="resources/controls/framePopup.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+    <a class="navbar-brand" href="../index.html">HAWKS</a>
+    <ul class="nav navbar-nav">
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+    <div class = "topMenu">
+      <button onclick="displayComponents()">Components</button>
+      <button onclick="displayEvents()">Events</button>
+  		<div class = "menuItem">
+  		</div>
+	  </div>
+      <div id = "components" class="components">
+        <h2>Components</h2>
+        Order Components by:
+        <select class="sortingOrderBy" onchange="SortingChanged()">
+  				<option value="Id">Id</option>
+  				<option value="Type">Type</option>
+  				<option value="State">State</option>
+  			</select>
+        <img src="resources/images/LoadingGif.gif" id="loadingGif" />
+        <div class = "errorOutput" style="display:none"><h1>No Connection To Controller</h1></div>
+        <ul class = "componentList" id= "componentList">
+        </ul>
+      </div>
+    <div id = "events" class="events" style="display:none">
+      <h2>Events</h2>
+      Order Events by:
+      <select class="sortingOrderBy" onchange="SortingChanged()">
+        <option value="Id">Id</option>
+        <option value="Type">Active</option>
+      </select>
+      <div class = "errorOutput" style="display:none"><h1>No Connection To Controller</h1></div>
+      <ul class = "eventList" id= "eventList">
+      </ul>
+      <button type="button" id="addEventButton" onclick = "addEventClick()">Add New Event</button>
+    </div>
+  </div>
+    <template id = "buttonTemplate">
+     <li class = "component toggleButton">
+       <button type="button" class="buttonEditButton" onclick=editComponentClick(event)>Edit</button>
+       <div class="componentName"></div>
+       <div class = "componentId"></div>
+       <button type = "button" class="componentButton" state="0"></button>
+     </li>
+   </template>
+
+   <template id = "valueOutputTemplate">
+   <li class = "component valueDisplay">
+     <button type="button" class="buttonEditButton" onclick=editComponentClick(event)>Edit</button>
+     <div class="componentName"></div>
+     <div class = "componentId"></div>
+     <div class = "valueOutput"></div>
+   </li>
+ </template>
+
+ <template id = "eventTemplate">
+ <li class = "event temporal">
+   <div class="eventActive"></div>
+   <div class="eventId"></div>
+   <div class="eventButtons">
+     <button class = "eventEditButton" type="button" onClick="editEventClick(event)">Edit</button>
+     <button class = "eventDeleteButton" type="button" onclick = "deleteEventClick(event)">Delete</button>
+   </div>
+   <div class = "eventTime"></div>
+   <div class = "eventRepeat"></div>
+   <div class = "eventAction"></div>
+ </li>
+</template>
+
+
+<script type="text/javascript" src="resources/controls/framePopup.js" ></script>
+<script type="text/javascript" src="resources/javascript/dashboard.js" ></script>
+</body>
+</html>

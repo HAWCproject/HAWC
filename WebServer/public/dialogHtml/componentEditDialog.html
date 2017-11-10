@@ -1,0 +1,42 @@
+<html>
+<head>
+  <style>
+    body{
+      text-align: center;
+    }
+  </style>
+</head>
+  <body>
+    <h1>Edit Component</h1>
+    <div>
+      Id   <input type="input" id="componentEditId" readonly style="background-color:ddd"></input><br />
+      Name <input type="input" id="componentEditName"></input><br />
+    </div>
+
+    <script type="text/javascript" >
+    var onClose = null;
+    var result = false;
+    var pageHeight = 130;
+
+    function setId(id){
+      document.getElementsByClassName("componentEditId")[0].value = id;
+    }
+
+    function setValues(component){
+      document.getElementById("componentEditId").value = component.id;
+      document.getElementById("componentEditName").value = component.name;
+    }
+    function getValues(){
+      var id = document.getElementById("componentEditId").value;
+      var name =  document.getElementById("componentEditName").value;
+      return {id:id, name:name};
+    }
+
+    function resetValues(){
+      document.getElementById("componentEditId").value = 0;
+      document.getElementById("componentEditName").value = "";
+
+    }
+</script>
+  </body>
+</html>

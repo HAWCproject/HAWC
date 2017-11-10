@@ -1,0 +1,154 @@
+<html>
+<head>
+  <style>
+    body{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dialogRoot">
+  <h1>Edit Event</h1>
+  <input class="editDialogType" type="hidden" value="temporal" />
+  <div>Active <input class="editDialogActive" type="checkbox" value="0"></div>
+  <div>ID <input class="editDialogID" type="text" value="0" readonly style="background-color:ddd"></div>
+  <div>Time <input class="editDialogTime" type="time" value=""></div>
+  <div>Date (dd/mm/yyyy)<input class="editDialogDate" type="date" value=""></div>
+  <div style="display:none;" class="editDialogDays">Days
+    <input type="checkbox" value="0">Mon</input>
+    <input type="checkbox" value="1">Tue</input>
+    <input type="checkbox" value="2">Wed</input>
+    <input type="checkbox" value="3">Thu</input>
+    <input type="checkbox" value="4">Fri</input>
+    <input type="checkbox" value="5">Sat</input>
+    <input type="checkbox" value="6">Sun</input>
+  </div>
+  <div>Reapeat <input class="editDialogRepeat" type="checkbox" value="0" onclick= "repeatCheckboxChange()"</div>
+    <ul class="editDialogActions" style="list-style:none">
+      <li>Target Component Id: <input type='text' value=''>State: <input class='editDialog' type='checkbox' checked = true>
+      </li>
+    </ul>
+  <button id="editDialogAddAction" onclick="addActionClick()">Add action</button>
+<div>
+
+  <script type="text/javascript" >
+
+  var onClose = null;
+  var result = false;
+  var pageHeight = 350;
+
+  function setId(id){
+    document.getElementsByClassName("editDialogID")[0].value = id;
+  }
+
+  function setValues(event){
+    document.getElementsByClassName("editDialogActive")[0].checked = event.active;
+    document.getElementsByClassName("editDialogID")[0].value = event.id;
+
+    var time;
+    if(event.repeat){
+      time = event.time;
+      document.getElementsByClassName("editDialogRepeat")[0].click();// = true;
+
+      var dayInputs = document.getElementsByClassName("editDialogDays")[0].querySelectorAll("input");
+
+      for(var i=0;i<7;i++){
+        if(event.days.includes(i)){
+          dayInputs[i].checked = true;
+        }
+      }
+    }
+    else {
+      var date = event.dateTime.substring(0,10);
+      time = event.dateTime.substring(11,19);
+      document.getElementsByClassName("editDialogDate")[0].value = date;
+    }
+    document.getElementsByClassName("editDialogTime")[0].value = time;
+
+    var listItemTemplate = document.getElementsByClassName("editDialogActions")[0].children[0];
+    document.getElementsByClassName("editDialogActions")[0].innerHTML = "";
+    event.action.forEach(action => {
+      var listItem = document.createElement('li');
+      listItem.innerHTML = listItemTemplate.innerHTML;
+      listItem.querySelectorAll("input")[0].value = action.target;
+      listItem.querySelectorAll("input")[1].checked = (action.state==0)?false:true;
+      document.getElementsByClassName("editDialogActions")[0].appendChild(listItem);
+    });
+    document.getElementsByClassName("editDialogType")[0].value = event.type;
+  }
+
+  function getValues(){
+    var newEvent={};
+    var time = document.getElementsByClassName("editDialogTime")[0].value;
+
+    newEvent.type =  document.getElementsByClassName("editDialogType")[0].value;
+    newEvent.active = (document.getElementsByClassName("editDialogActive")[0].checked)?1:0;
+    newEvent.id = document.getElementsByClassName("editDialogID")[0].value;
+    newEvent.id = Number(newEvent.id);
+    newEvent.repeat = document.getElementsByClassName("editDialogRepeat")[0].checked?1:0;
+    newEvent.action = [];
+    var actions = document.getElementsByClassName("editDialogActions")[0].querySelectorAll("li");
+
+    actions.forEach(item =>{
+      var action = {};
+      action.target = item.querySelectorAll("input")[0].value
+      action.state = (item.querySelectorAll("input")[1].checked)?1:0;
+
+      newEvent.action.push(action);
+    });
+
+    if(newEvent.repeat){
+      newEvent.time = document.getElementsByClassName("editDialogTime")[0].value;
+      var dayInputs = document.getElementsByClassName("editDialogDays")[0].querySelectorAll("input");
+
+      newEvent.days = [];
+      for(var i=0;i<7;i++){
+        if(dayInputs[i].checked){
+          newEvent.days.push(i);
+        }
+      }
+    }
+    else {
+      newEvent.dateTime = document.getElementsByClassName("editDialogDate")[0].value;
+      newEvent.dateTime += "T" + document.getElementsByClassName("editDialogTime")[0].value;
+    }
+    return newEvent;
+  }
+
+  function resetValues(){
+    document.getElementsByClassName("editDialogActive")[0].checked = true;
+    document.getElementsByClassName("editDialogID")[0].value = 0;
+    document.getElementsByClassName("editDialogRepeat")[0].checked = false;
+    document.getElementsByClassName("editDialogDays")[0].
+        querySelectorAll("input").forEach(input => input.checked=false);
+    document.getElementsByClassName("editDialogDate")[0].value = 0;
+    document.getElementsByClassName("editDialogTime")[0].value = 0;
+    document.getElementsByClassName("editDialogActions")[0].innerHTML = "";
+    document.getElementsByClassName("editDialogType")[0].value = "temporal";
+    document.getElementById("editDialogAddAction").click();
+  }
+
+function repeatCheckboxChange(){
+  var root = event.target.parentNode.parentNode;
+  if(event.target.checked){
+    root.getElementsByClassName('editDialogDate')[0].parentNode.style.display='none';
+    root.getElementsByClassName('editDialogDays')[0].style.display='block';
+
+  }
+  else{
+      root.getElementsByClassName('editDialogDate')[0].parentNode.style.display='block';
+      root.getElementsByClassName('editDialogDays')[0].style.display='none';
+    }
+  }
+
+  function addActionClick(){
+    var root = event.target.parentNode.parentNode;
+    var li = document.createElement('li');
+    li.innerHTML = `Target Component Id: <input type='text' value=''>
+    State <input class='editDialog' type='checkbox' checked = true>`;
+    root.getElementsByClassName('editDialogActions')[0].appendChild(li);
+  }
+</script>
+</body>
+</html>

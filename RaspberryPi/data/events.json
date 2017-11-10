@@ -1,0 +1,1 @@
+[{"type":"temporal","active":1,"id":2,"repeat":0,"action":[{"target":"2","state":1}],"dateTime":"2017-11-03T12:01"},{"type":"temporal","active":0,"id":1,"repeat":0,"action":[{"target":"4","state":1}],"dateTime":"2017-11-03T10:06"}]

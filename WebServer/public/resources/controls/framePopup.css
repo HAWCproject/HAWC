@@ -1,0 +1,40 @@
+#framePopupMask{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right:0px;
+  bottom:0px;
+  background-color: #000;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+iframe{
+  border: 0px;
+  /*height:300px;*/
+  display:block;
+}
+
+#framePopupContainer{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width:100%;
+  display: none;
+  z-index: 11;
+  text-align: center;
+}
+
+#framePopupFrame{
+  width: 84%;
+  margin: 75px auto 0px auto;
+  background-color: #c4d5f2;
+}
+
+#framePopupButtonFooter{
+  width: 84%;
+  margin: -10px auto 0px auto;
+  background-color: #c4d5f2;
+  padding-top:20px;
+  padding-bottom: 20px;
+}
