@@ -1,3 +1,8 @@
+//TODO add webserver handling for updates of events, may be an issue with timeouts being set, may have to  some sort of state check so that event callbacks are thrown away if they are not the most recent
+//TODO add quick input checking for event edit form
+//TODO add handling to change button name and id's (i suppose) - problem with events being linked to old id's
+//TODO worth chaning the messe that is the dialog window to an iframe??
+
 var components = [];
 var events = [];
 
